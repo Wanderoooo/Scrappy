@@ -1,24 +1,21 @@
-from bs4 import BeautifulSoup
 import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
 from selenium.webdriver.common.by import By
-from bs4 import BeautifulSoup
 import pandas as pd
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
-URL = "https://ca.indeed.com/jobs?q=web+developer&l=British+Columbia&vjk=7a47253445ffd1ea&advn=2892133147171928"
-PATH = "C:/Users/Alissa Guo/Downloads/chrome-win64"
+URL = "https://ca.indeed.com/jobs?q=front+end%2C+web&l=Yukon&vjk=608681605c7203fd"
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 driver.get(URL)
 
-checkRoleKeywords = ["front", "web", "ui", "ux", "css" "javascript", "mobile", "html", "css", "interactive"]
+checkRoleKeywords = ["front", "web", "ui", "ux", "css" "javascript", "mobile", "html", "css", "interactive", "angular"]
 
-checkSkillKeyword = ["sql", "react", "javascript", "css", "html", "next.js", "angular", "aws", "api", "figma", "jquery", "git", "restful", "json", "xml", "node", "c#", "c++", "java", "python", "cloud", "linux", "bootstrap", "django", "express.js"]
+checkSkillKeyword = ["sql", "react", "javascript", "css", "html", "next.js", "angular", "aws", "api", "figma", "jquery", "git", "restful", "json", "xml", "node", "c#", "c++", " java ", "python", "cloud", "linux", "bootstrap", "django", "express.js", "rails", "php", "sass"]
 
 checkEducationKeyword = ["bachelors", "bachelor's", "master's" "phd", "graduate", "masters", "university", "college", "certificate", "bootcamp", "cegep", "undergrad", "secondary school", "post-secondary"]
 
@@ -119,12 +116,15 @@ while i < 10 :
       
     
     df2 = pd.DataFrame({"workLocation" : workLocation, "city" : city, "jobTypes" : jobTypes, "skills" : skills, "education" : education})
-    df2.to_csv('frontend_jobs.csv', mode='a', index=False, header=False)
+    df2.to_csv('frontend_jobs_yk.csv', mode='a', index=False, header=False)
       
-    sleep(2)
-    nextButton = driver.find_element(By.XPATH, '//a[@data-testid="pagination-page-next"]')
-    nextButton.click()
-    
+    sleep(1)
+    try:
+      nextButton = driver.find_element(By.XPATH, '//a[@data-testid="pagination-page-next"]')
+      nextButton.click()
+    except NoSuchElementException:
+      break
+
     i+=1
     
 
