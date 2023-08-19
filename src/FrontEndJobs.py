@@ -15,50 +15,70 @@ PATH = "C:/Users/Alissa Guo/Downloads/chrome-win64"
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 driver.get(URL)
 
+checkRoleKeywords = ["front", "frontend", "front-end", "web", "ui", "ux", "css" "javascript", "mobile", "html", "css", "interactive"]
 
+checkSkillKeyword = ["sql", "react", "javascript", "css", "html", "next.js", "angular", "aws", "api", "figma", "jquery", "git", "restful", "json", "xml", "node", "c#", "c++", "java", "python", "cloud", "linux", "bootstrap", "django", "express.js"]
 
 # df = pd.DataFrame({"location": [], "attributes": [], "description": []})
 # df.to_csv('frontend_jobs.csv', index=False)
 
 i = 0
-while i < 5 :
+while i < 1 :
     location = []
     attributes = []
-    description = []
+    skills = []
   
     sleep(2)
     try:
       closePopup = driver.find_element(By.CLASS_NAME, 'css-yi9ndv').click()
     except:
       pass
+    
     WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'jobCard_mainContent')))
     jobs = driver.find_elements(By.CLASS_NAME, 'jobCard_mainContent')
     
     for job in jobs:
+      
       WebDriverWait(job, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'jobTitle')))
-      jobTitleLink = job.find_element(By.CSS_SELECTOR, "a")
-      jobTitleLink.click()
+      jobTitle = job.find_element(By.CLASS_NAME, "jobTitle")
       
-      WebDriverWait(job, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'companyLocation')))
-      jobLocation = job.find_element(By.CLASS_NAME, 'companyLocation')
-      location.append(jobLocation.text)
+      isRollValid = False
+      for keyword in checkRoleKeywords:
+        if (keyword in jobTitle.text):
+          isRollValid = True
+          break
       
-      WebDriverWait(job, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'attribute_snippet')))
-      jobAttributes = job.find_element(By.CLASS_NAME, 'attribute_snippet')
-      attributes.append(jobAttributes.text)
+      if (isRollValid) :
+        jobTitleLink = job.find_element(By.CSS_SELECTOR, "a")
+        jobTitleLink.click()
       
+        WebDriverWait(job, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'companyLocation')))
+        jobLocation = job.find_element(By.CLASS_NAME, 'companyLocation')
+        location.append(jobLocation.text)
       
-      sleep(2)
-      WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.ID, "jobDescriptionText")))
-      jobDescription = driver.find_element(By.ID, "jobDescriptionText")
-      description.append(jobDescription.text.strip())
+        WebDriverWait(job, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'attribute_snippet')))
+        jobAttributes = job.find_element(By.CLASS_NAME, 'attribute_snippet')
+        attributes.append(jobAttributes.text)
       
-      df2 = pd.DataFrame({"location": location, "attributes": attributes, "description": description})
-      df2.to_csv('frontend_jobs.csv', mode='a', index=False, header=False)
+        sleep(2)
+        WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.ID, "jobDescriptionText")))
+        jobDescription = driver.find_element(By.ID, "jobDescriptionText")
+        
+        c = 0
+        skills = []
+        while c < len(checkSkillKeyword):
+          if (checkSkillKeyword[c] in jobDescription.text):
+            skills.append(checkRoleKeywords[c])
+        
+        skills.append(skills)
       
-    sleep(2)
-    nextButton = driver.find_element(By.XPATH, '//a[@data-testid="pagination-page-next"]')
-    nextButton.click()
+    
+    df2 = pd.DataFrame({"location": location, "attributes": attributes, "skills" : skills})
+    df2.to_csv('frontend_jobs.csv', mode='a', index=False, header=False)
+      
+    # sleep(2)
+    # nextButton = driver.find_element(By.XPATH, '//a[@data-testid="pagination-page-next"]')
+    # nextButton.click()
     
     i+=1
     
