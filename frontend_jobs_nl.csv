@@ -1,2 +1,3 @@
+WorkLocation,City,JobTypes,Skills,Education
 In-person,"St. John's, NL",['Full-time'],"['api', 'git']",[]
 In-person,Canada,['Full-time'],['git'],"['university', 'post-secondary']"

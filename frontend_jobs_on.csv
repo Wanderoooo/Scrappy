@@ -1,3 +1,4 @@
+WorkLocation,City,JobTypes,Skills,Education
 Hybrid remote,"North York, ON",['Full-time'],"['sql', 'javascript', 'css', 'html', 'api', 'node', 'bootstrap', 'sass']","[""bachelor's""]"
 Remote,"Toronto, ON",[],"['react', 'javascript', 'css', 'html', 'angular', 'cloud']",[]
 In-person,"Kitchener, ON",['Full-time'],[],['college']

@@ -1,3 +1,4 @@
+WorkLocation,City,JobTypes,Skills,Education
 Remote,Reg,['Full-time'],"['sql', 'javascript', 'css', 'html', 'angular', 'api', 'git', 'json', 'xml']",[]
 In-person,"Regina, SK",[],"['javascript', 'css', 'html', 'angular', 'git', 'restful', 'bootstrap']",[]
 In-person,"Regina, SK",['Full-time'],[],"['college', 'cegep']"

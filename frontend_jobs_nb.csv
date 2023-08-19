@@ -1,3 +1,4 @@
+WorkLocation,City,JobTypes,Skills,Education
 In-person,"Hanwell, NB",['Part-time'],"['javascript', 'css', 'html', 'php']","['secondary school', 'post-secondary']"
 In-person,"Quispamsis, NB",['Full-time'],[],[]
 In-person,"Saint John, NB",['Full-time'],[],"['college', 'cegep']"

@@ -1,3 +1,4 @@
+WorkLocation,City,JobTypes,Skills,Education
 In-person,"Burnside, NS",['Full-time'],"['javascript', 'css', 'html']",[]
 In-person,"Shubenacadie, NS",['Full-time'],"['javascript', 'css', 'html']","[""bachelor's""]"
 In-person,"Halifax, NS",['Full-time'],"['sql', 'react', 'javascript', 'css', 'html', 'api', 'git', 'restful', 'node']","[""bachelor's""]"
