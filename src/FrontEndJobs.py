@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -16,11 +17,11 @@ driver.get(URL)
 
 
 
-df = pd.DataFrame({"location": [], "attributes": [], "description": []})
-df.to_csv('frontend_jobs', index=False)
+# df = pd.DataFrame({"location": [], "attributes": [], "description": []})
+# df.to_csv('frontend_jobs.csv', index=False)
 
 i = 0
-while i == 0 :
+while i < 5 :
     location = []
     attributes = []
     description = []
@@ -52,11 +53,13 @@ while i == 0 :
       jobDescription = driver.find_element(By.ID, "jobDescriptionText")
       description.append(jobDescription.text.strip())
       
+      df2 = pd.DataFrame({"location": location, "attributes": attributes, "description": description})
+      df2.to_csv('frontend_jobs.csv', mode='a', index=False, header=False)
       
-      
-    # sleep(5)
-    # nextButton = driver.find_element(By.XPATH, '//a[@data-testid="pagination-page-next"]')
-    # nextButton.click()
+    sleep(2)
+    nextButton = driver.find_element(By.XPATH, '//a[@data-testid="pagination-page-next"]')
+    nextButton.click()
+    
     i+=1
     
 
