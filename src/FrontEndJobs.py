@@ -15,20 +15,24 @@ PATH = "C:/Users/Alissa Guo/Downloads/chrome-win64"
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 driver.get(URL)
 
-checkRoleKeywords = ["front", "frontend", "front-end", "web", "ui", "ux", "css" "javascript", "mobile", "html", "css", "interactive"]
+checkRoleKeywords = ["front", "web", "ui", "ux", "css" "javascript", "mobile", "html", "css", "interactive"]
 
 checkSkillKeyword = ["sql", "react", "javascript", "css", "html", "next.js", "angular", "aws", "api", "figma", "jquery", "git", "restful", "json", "xml", "node", "c#", "c++", "java", "python", "cloud", "linux", "bootstrap", "django", "express.js"]
+
+checkEducationKeyword = ["bachelors", "bachelor's", "master's" "phd", "graduate", "masters", "university", "college", "certificate", "bootcamp", "cegep", "undergrad", "secondary school", "post-secondary"]
 
 # df = pd.DataFrame({"location": [], "attributes": [], "description": []})
 # df.to_csv('frontend_jobs.csv', index=False)
 
 i = 0
-while i < 1 :
-    location = []
-    attributes = []
+while i < 7 :
+    workLocation = []
+    city = []
+    jobType = []
     skills = []
+    education = []
   
-    sleep(2)
+    sleep(1)
     try:
       closePopup = driver.find_element(By.CLASS_NAME, 'css-yi9ndv').click()
     except:
@@ -44,7 +48,7 @@ while i < 1 :
       
       isRollValid = False
       for keyword in checkRoleKeywords:
-        if (keyword in jobTitle.text):
+        if (keyword in jobTitle.text.lower()):
           isRollValid = True
           break
       
@@ -53,32 +57,67 @@ while i < 1 :
         jobTitleLink.click()
       
         WebDriverWait(job, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'companyLocation')))
+        
+        # workLocationInitial = "In-person"
+        
         jobLocation = job.find_element(By.CLASS_NAME, 'companyLocation')
-        location.append(jobLocation.text)
+        
+        if ("Remote" == jobLocation.text): 
+          workLocation.append("Remote")
+          city.append("NA")
+        elif ("remote" in jobLocation.text.lower()) or ("hybrid" in jobLocation.text.lower()):
+          locationSplit = jobLocation.text.split("in")
+          before_in = locationSplit[0].strip()
+          after_in = locationSplit[1].strip()
+          workLocation.append(before_in)
+          city.append(after_in)
+        else:
+          workLocation.append("In-person")
+          city.append(jobLocation.text)
       
         WebDriverWait(job, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'attribute_snippet')))
         jobAttributes = job.find_element(By.CLASS_NAME, 'attribute_snippet')
-        attributes.append(jobAttributes.text)
+        if "Full-time" in jobAttributes.text:
+          jobType.append("Full-time")
+        elif "Part-time" in jobAttributes.text:
+          jobType.append("Part-time")
+        elif "Internship" in jobAttributes.text or "Co-op" in jobAttributes.text :
+          jobType.append("Internship/Co-op")
+        elif "contract" in jobAttributes.text or "Contract" in jobAttributes.text :
+          jobType.append("Contract")
+        else:
+          jobType.append("NA")
       
         sleep(2)
         WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.ID, "jobDescriptionText")))
         jobDescription = driver.find_element(By.ID, "jobDescriptionText")
         
         c = 0
-        skills = []
+        skillsArray = []
+        jobDescrTextLower = jobDescription.text.lower()
         while c < len(checkSkillKeyword):
-          if (checkSkillKeyword[c] in jobDescription.text):
-            skills.append(checkRoleKeywords[c])
+          if (checkSkillKeyword[c] in jobDescrTextLower):
+            skillsArray.append(checkSkillKeyword[c])
+          c+=1
+          
+        skills.append(skillsArray)
         
-        skills.append(skills)
+        k = 0
+        educationArray = []
+        while k < len(checkEducationKeyword):
+          if (checkEducationKeyword[k] in jobDescrTextLower):
+            educationArray.append(checkEducationKeyword[k])
+          k+=1
+        
+        education.append(educationArray)
       
     
-    df2 = pd.DataFrame({"location": location, "attributes": attributes, "skills" : skills})
+    df2 = pd.DataFrame({"workLocation" : workLocation, "city" : city, "jobType" : jobType, "skills" : skills, "education" : education})
     df2.to_csv('frontend_jobs.csv', mode='a', index=False, header=False)
       
-    # sleep(2)
-    # nextButton = driver.find_element(By.XPATH, '//a[@data-testid="pagination-page-next"]')
-    # nextButton.click()
+    sleep(2)
+    nextButton = driver.find_element(By.XPATH, '//a[@data-testid="pagination-page-next"]')
+    nextButton.click()
     
     i+=1
     
