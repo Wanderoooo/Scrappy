@@ -177,4 +177,4 @@ WHERE Education = "NA";
 
 DELETE FROM abfrontendjobs
 WHERE City = "Toronto, ON";
-SELECT COUNT(*) FROM abfrontendjobs;
+SELECT * FROM mbfrontendjobs;
