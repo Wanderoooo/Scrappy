@@ -49,7 +49,7 @@ WHERE JobTypes LIKE "%Internship/Co-op%";
 SELECT COUNT(*) FROM skfrontendjobs
 WHERE Skills LIKE "%sql%";
 
-SELECT COUNT(*) FROM skfrontendjobs
+SELECT COUNT(*) FROM abfrontendjobs
 WHERE Skills LIKE "%react%";
 
 SELECT COUNT(*) FROM skfrontendjobs
@@ -175,4 +175,6 @@ WHERE Education LIKE "%post-secondary%";
 SELECT COUNT(*) FROM skfrontendjobs
 WHERE Education = "NA";
 
-SELECT * FROM skfrontendjobs;
+DELETE FROM abfrontendjobs
+WHERE City = "Toronto, ON";
+SELECT COUNT(*) FROM abfrontendjobs;
