@@ -1,6 +1,5 @@
 import '@/styles/globals.css'
 import Navbar from '../components/Navbar'
-import '@radix-ui/themes/styles.css';
 
 
 export default function App({ Component, pageProps }) {

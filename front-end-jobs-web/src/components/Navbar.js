@@ -5,9 +5,6 @@ const App = () => (
   <Breadcrumb
     items={[
       {
-        title: <Link href=".">Home</Link>,
-      },
-      {
         title: <Link href="./bc">BC</Link>,
       },
       {
