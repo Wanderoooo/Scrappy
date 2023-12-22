@@ -15,8 +15,8 @@ Data extraction was done through analysis of a website’s DOM with Python scrip
 ## Data Visualization
 Data Visualization was done in Tableau with data imported from MySQL
 - categorized by province across Canada
-- data sub-categories include:
-  job location
-  job commitment type
-  education requirement
-  demanded tech skills
+#### data sub-categories include:
+ - job location
+ - job commitment type
+ - education requirement
+ - demanded tech skills
